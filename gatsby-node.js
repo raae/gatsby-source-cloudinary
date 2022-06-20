@@ -3,6 +3,16 @@ const { newCloudinary, getResourceOptions } = require('./utils');
 const REPORTER_PREFIX = `gatsby-source-cloudinary`;
 const NODE_TYPE = `CloudinaryMedia`;
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createType } = actions;
+
+  createType(`
+    type CloudinaryMedia implements Node {
+      joinedAt: Date
+    }
+  `);
+};
+
 const getNodeData = (gatsbyUtils, media) => {
   const { createNodeId, createContentDigest } = gatsbyUtils;
 
