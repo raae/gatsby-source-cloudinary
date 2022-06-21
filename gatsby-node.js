@@ -98,8 +98,8 @@ const createCloudinaryNodes = (gatsbyUtils, cloudinary, resourceOptions) => {
 };
 
 exports.sourceNodes = (gatsbyUtils, pluginOptions) => {
-  const cloudinary = newCloudinary(pluginOptions);
-  const resourceOptions = getResourceOptions(pluginOptions);
+  // const cloudinary = newCloudinary(pluginOptions);
+  // const resourceOptions = getResourceOptions(pluginOptions);
 
   return createCloudinaryNodes(gatsbyUtils, cloudinary, resourceOptions);
 };
