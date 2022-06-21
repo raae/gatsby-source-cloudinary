@@ -3,20 +3,17 @@ const { newCloudinary, getResourceOptions } = require('./utils');
 const REPORTER_PREFIX = `gatsby-source-cloudinary`;
 const NODE_TYPE = `CloudinaryMedia`;
 
-// 1.1 🤯. 🔌 ☑️ 🎶  = ({ 😹 }) => {
 exports.pluginOptionsSchema = ({ Joi }) => {
-  // 1.2 return 😹.📖({
   return Joi.object({
-    // 1.3  😹.🧶().®️().💁(`Enables`),
     cloudName: Joi.string().required(),
     apiKey: Joi.string().required(),
     apiSecret: Joi.string().required(),
     resourceType: Joi.string().required(),
     type: Joi.string().required(),
-    maxResults: Joi.string().required(),
-    tags: Joi.string().required(),
+    maxResults: Joi.integer().required(),
+    tags: Joi.boolean().required(),
     prefix: Joi.string().required(),
-    context: Joi.string().required(),
+    context: Joi.boolean().required(),
   });
 };
 
