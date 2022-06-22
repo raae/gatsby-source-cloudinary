@@ -8,12 +8,12 @@ exports.pluginOptionsSchema = ({ Joi }) => {
     cloudName: Joi.string().required(),
     apiKey: Joi.string().required(),
     apiSecret: Joi.string().required(),
-    resourceType: Joi.string().required(),
-    type: Joi.string().required(),
-    maxResults: Joi.integer().required(),
-    tags: Joi.boolean().required(),
-    prefix: Joi.string().required(),
-    context: Joi.boolean().required(),
+    resourceType: Joi.string().default(image),
+    type: Joi.string().default(all),
+    maxResults: Joi.integer().default(10),
+    tags: Joi.boolean().default(false),
+    prefix: Joi.string(),
+    context: Joi.boolean(),
   });
 };
 
