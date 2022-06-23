@@ -16,6 +16,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
     context: Joi.boolean(),
   });
 };
+// yes
 
 const getNodeData = (gatsbyUtils, media) => {
   const { createNodeId, createContentDigest } = gatsbyUtils;
