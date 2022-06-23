@@ -3,15 +3,31 @@ const { newCloudinary, getResourceOptions } = require('./utils');
 const REPORTER_PREFIX = `gatsby-source-cloudinary`;
 const NODE_TYPE = `CloudinaryMedia`;
 
-const getNodeData = (gatsby, media) => {
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
+    cloudName: Joi.string().required(),
+    apiKey: Joi.string().required(),
+    apiSecret: Joi.string().required(),
+    resourceType: Joi.string().default('image'),
+    type: Joi.string().default('all'),
+    maxResults: Joi.integer().default(10),
+    tags: Joi.boolean().default(false),
+    prefix: Joi.string(),
+    context: Joi.boolean(),
+  });
+};
+
+const getNodeData = (gatsbyUtils, media) => {
+  const { createNodeId, createContentDigest } = gatsbyUtils;
+
   return {
     ...media,
-    id: gatsby.createNodeId(`cloudinary-media-${media.public_id}`),
+    id: createNodeId(`cloudinary-media-${media.public_id}`),
     parent: null,
     internal: {
       type: NODE_TYPE,
       content: JSON.stringify(media),
-      contentDigest: gatsby.createContentDigest(media),
+      contentDigest: createContentDigest(media),
     },
   };
 };
@@ -26,10 +42,10 @@ const addTransformations = (resource, transformation, secure) => {
   return transformedURL;
 };
 
-const createCloudinaryNodes = (gatsbyUtils, cloudinary, options) => {
+const createCloudinaryNodes = (gatsbyUtils, cloudinary, resourceOptions) => {
   const { actions, reporter } = gatsbyUtils;
 
-  return cloudinary.api.resources(options, (error, result) => {
+  return cloudinary.api.resources(resourceOptions, (error, result) => {
     const hasResources = result && result.resources && result.resources.length;
 
     if (error) {
@@ -62,9 +78,9 @@ const createCloudinaryNodes = (gatsbyUtils, cloudinary, options) => {
   });
 };
 
-exports.sourceNodes = (gatsby, options) => {
-  const cloudinary = newCloudinary(options);
-  const resourceOptions = getResourceOptions(options);
+exports.sourceNodes = (gatsbyUtils, pluginOptions) => {
+  const cloudinary = newCloudinary(pluginOptions);
+  const resourceOptions = getResourceOptions(pluginOptions);
 
-  return createCloudinaryNodes(gatsby, cloudinary, resourceOptions);
+  return createCloudinaryNodes(gatsbyUtils, cloudinary, resourceOptions);
 };
