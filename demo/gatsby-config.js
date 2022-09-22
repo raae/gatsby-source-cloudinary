@@ -7,6 +7,7 @@ module.exports = {
     title: `Gatsby Source Cloudinary Starter`,
   },
   plugins: [
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-cloudinary`,
       options: {
@@ -19,6 +20,12 @@ module.exports = {
         // resultsPerPage: 500,
         prefix: 'demo/animals',
         // type: "upload",
+      },
+    },
+    {
+      resolve: `gatsby-transformer-cloudinary`,
+      options: {
+        transformTypes: ['CloudinaryMedia'],
       },
     },
   ],
